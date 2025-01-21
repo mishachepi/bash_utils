@@ -1,3 +1,3 @@
 #!bin/bash
 
-check /etc/os-release
+cat /etc/os-release
