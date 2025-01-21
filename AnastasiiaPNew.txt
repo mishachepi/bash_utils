@@ -1,1 +1,1 @@
-*/15 * * * * /opt/281024-wdm/Anastasiia_Posokhova/task_AnastasiiaP.sh
+*/15 * * * * /home/user/task.sh
