@@ -12,4 +12,5 @@ if [ "$DF_ROOT" -gt "$TARGET" ]; then
 
 else
         echo "Места на диске достаточно"
+        echo "Места на диске достаточно"
 fi
