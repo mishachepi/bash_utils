@@ -5,11 +5,11 @@ TARGET=70
 DF_ROOT=$(df / | awk '{print $5}' | sed 's/%//' | grep -v Use)
 
 if [ "$DF_ROOT" -gt "$TARGET" ]; then
-        date
-        echo "Места на диске не достаточно."
-        echo "Доступно меньше $TARGET %"
-        du -ah / | sort -rh | head -n 10 
-
+	date
+	echo "Disk space is NOT OK!"
+	echo "more then ${TARGET}%"
+	echo "top 10 largest files:"
+	du -ah / 2>/dev/null | sort -rh | head -n 10  
 else
-        echo "Места на диске достаточно"
+	echo "Disk space is OK!"
 fi

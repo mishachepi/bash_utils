@@ -1,31 +1,21 @@
 #!/bin/bash
 
-LOG_DIR="/var/log"
-ERROR_PATTERNS="error|Error|ERROR|warning|Warning|WARNING"
+# Директория с логами
+log_directory="/var/log"
 
-# File for the report
-REPORT_FILE="/tmp/error_report_$(date +%Y%m%d_%H%M%S).txt"
+# Файл для сохранения отчета
+report_file="./error_report.txt"
 
-# Check if the log directory exists
-if [ ! -d "$LOG_DIR" ]; then
-    echo "Directory $LOG_DIR not found."
-    exit 1
-fi
+# Шаблон для поиска ошибок
+error_patterns="(error|Error|ERROR|warning|Warning|WARNING)"
 
-# Count the total number of errors
-TOTAL_ERRORS=$(grep -Eri "$ERROR_PATTERNS" "$LOG_DIR" | wc -l)
+# Поиск ошибок в логах и подсчет их количества
+grep -E -r "$error_patterns" "$log_directory" | awk -F ':' '{print $5}' | sort | uniq -c | sort -nr > "$report_file"
 
-# Prepare the report
-{
-    echo "Log check report from $LOG_DIR"
-    echo "Date: $(date)"
-    echo "\nTotal number of errors: $TOTAL_ERRORS\n"
+# Вывод отчета в консоль
+echo "Отчет о ошибках в логах:"
+#cat "$report_file"
 
-    echo "Top 10 most frequent errors:"
-    grep -Eri "$ERROR_PATTERNS" "$LOG_DIR" | \
-        awk '{ $1=$2=$3=""; print $0 }' | \
-        sort | uniq -c | sort -rh | head -n 10
-} > "$REPORT_FILE"
-
-# Output the path to the report
-echo "Report generated: $REPORT_FILE"
+# Подготовка списка наиболее частых ошибок (первые 5)
+echo -e "\nНаиболее частые ошибки (первые 5):\n"
+head -n 5 "$report_file"
