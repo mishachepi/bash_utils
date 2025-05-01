@@ -11,7 +11,6 @@ if [ -f /etc/os-release ]; then
   echo "ID: $ID"
   echo "ID версии: $VERSION_ID"
   echo "Поддержка (URL): $HOME_URL"
-  echo "-----------------------------------"
 else
   echo "Ошибка: файл /etc/os-release не найден или доступ к нему ограничен."
 fi
